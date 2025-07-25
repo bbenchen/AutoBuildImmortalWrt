@@ -82,8 +82,8 @@ jobs:
       
       - name: Generate Firmware SHA-256
         run: |
-          cp ${{ github.workspace }}/bin/targets/bcm27xx/${{ env.cpu }}/*squashfs-factory.img.gz  ${{ github.workspace }}
-          for file in *squashfs-factory.img.gz; do
+          cp ${{ github.workspace }}/bin/targets/bcm27xx/${{ env.cpu }}/*squashfs-*.img.gz  ${{ github.workspace }}
+          for file in *squashfs-*.img.gz; do
             sha256sum "$file" > "$file.sha256"
             sha256sum -c "$file.sha256"
           done
