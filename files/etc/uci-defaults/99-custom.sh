@@ -38,11 +38,18 @@ ifnames=$(echo "$ifnames" | awk '{$1=$1};1')
 if [ "$count" -eq 1 ]; then
     # 单网口设备 类似于NAS模式 动态获取ip模式 具体ip地址取决于上一级路由器给它分配的ip 也方便后续你使用web页面设置旁路由
     # 单网口设备 不支持修改ip 不要在此处修改ip 单网口采用dhcp模式 删除默认的192.168.1.1
-    uci set network.lan.proto='dhcp'
-    uci delete network.lan.ipaddr
-    uci delete network.lan.netmask
-    uci delete network.lan.gateway     
-    uci delete network.lan.dns 
+    # uci set network.lan.proto='dhcp'
+    # uci delete network.lan.ipaddr
+    # uci delete network.lan.netmask
+    # uci delete network.lan.gateway     
+    # uci delete network.lan.dns
+
+    uci set network.lan.proto='static'
+    uci set network.lan.ipaddr='192.168.10.254'
+    uci set network.lan.netmask='255.255.255.0'
+    uci set network.lan.gateway='192.168.10.1'
+    uci set network.lan.dns='192.168.10.1'
+    echo "set 192.168.10.254 at $(date)" >>$LOGFILE
     uci commit network
 elif [ "$count" -gt 1 ]; then
     # 提取第一个接口作为WAN
